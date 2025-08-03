@@ -1,18 +1,21 @@
 
 import java.util.Scanner;
 
+// Class representing an individual item (pizza)
 class Item {
 
-    String name;
-    int price;
-    int quantity = 0;
+    String name;                        // Name of the pizza
+    int price;                          // Price per unit
+    int quantity = 0;                   // Quantity ordered
 
+    // Constructor to initialize the item
     public Item(String name, int price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
     }
 
+    // String representation of an item (used while printing the bill)
     @Override
     public String toString() {
         String str = "Item : %16s, Price : %3d, Quantity : %2d".formatted(name, price, quantity);
@@ -21,8 +24,10 @@ class Item {
 
 }
 
+// Main class to handle the pizza billing system
 public class PizzaBillingSystem {
 
+    // Method to display the pizza menu
     static void displayMenu() {
         System.out.println("===== Welcome to Pizza Store =====");
         System.out.println("Menu:");
@@ -34,21 +39,22 @@ public class PizzaBillingSystem {
         System.out.println("----------------------------------");
     }
 
+    // Method to display the final bill
     static void displayBill(Item[] items) {
-        int grandTotal = 0;
-        int totalItems = 0;
+        int grandTotal = 0;                                     // Total cost of all items
+        int totalItems = 0;                                     // Total quantity of all items
 
-        // Display ordered Items
+        // Loop through all items and display those which are ordered
         for (Item it : items) {
             if (it != null && it.quantity != 0) {
-                System.out.println(it);
-                grandTotal += (it.price * it.quantity);
-                totalItems += it.quantity;
+                System.out.println(it);                         // Print item details
+                grandTotal += (it.price * it.quantity);         // Add to grand total
+                totalItems += it.quantity;                      // Increment item count
             }
 
         }
 
-        // Displaying Bill
+        // Print bill summary
         if (grandTotal != 0) {
             System.out.println("----------------------------------");
             System.out.println("Total items = " + totalItems);
@@ -59,19 +65,22 @@ public class PizzaBillingSystem {
 
     }
 
+    //Main Method
     public static void main(String[] args) {
-        int choice;
-        Item[] items = new Item[4];
+        int choice;                                     // To store user choice
+        Item[] items = new Item[4];                     // Array to store item objects (4 pizzas)
 
         // Display menu Bar.
         displayMenu();
 
         try (Scanner sc = new Scanner(System.in)) {
-            // Taking order
+            // Take orders from the user in a loop
             do {
                 System.out.println("Enter your choice :");
                 choice = sc.nextInt();
                 int quant;
+
+                // Perform action based on user choice
                 switch (choice) {
                     case 1 -> {
                         System.out.println("Enter quantity");
@@ -97,7 +106,7 @@ public class PizzaBillingSystem {
                         items[3] = new Item("Veggie Delight", 280, quant);
                         System.out.println("Item added to order.");
                     }
-                    case 5 -> {
+                    case 5 -> {                                 // Exit when user chooses to generate bill
                     }
                     default ->
                         System.out.println("Invalid input....");
@@ -107,7 +116,7 @@ public class PizzaBillingSystem {
             } while (choice != 5);
         }
 
-        // Display bill to user
+        // Display final bill after exiting the loop
         displayBill(items);
 
     }
